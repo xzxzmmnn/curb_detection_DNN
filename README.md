@@ -5,4 +5,6 @@ Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Fast Cur
 ## Data set
 The link for dataset is https://drive.google.com/drive/folders/1RuApVar81cC59NZgJmkFyBwkfGUYK79o?usp=sharing
 ## Project Code 
-TBA
+### Requirements
+* Python 3.5
+
