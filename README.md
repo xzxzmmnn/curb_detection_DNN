@@ -3,7 +3,7 @@
 
 Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Fast Curb Detection based on a Single-Shot Point Cloud with Cue Points Using Deep Neural Networks," submitted to International Conference on Robotics and Automation, 2020.
 ## Data set
-'''
+```
 ├── Total_data_set_line\
 │   ├── Training\
 │   │   ├── input_data
@@ -19,7 +19,7 @@ Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Fast Cur
     │   └── top_view_raw   
     └── test
         └── labels
-'''
+```
 There are two folders.
 * Total_data_set_line : The label format is lines in 2D image domain.
 * Total_data_set_point : The label format is points in 2D image domain.
