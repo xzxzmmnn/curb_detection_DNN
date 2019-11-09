@@ -4,13 +4,13 @@
 Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Fast Curb Detection based on a Single-Shot Point Cloud with Cue Points Using Deep Neural Networks," submitted to International Conference on Robotics and Automation, 2020.
 ## Data set
 ```
-├── Total_data_set_line\
-│   ├── Training\
+├── Total_data_set_line
+│   ├── Training
 │   │   ├── input_data
 │   │   ├── labels
 │   │   └── top_view_raw   
 │   └── test
-        └── labels            
+│       └── labels            
 │
 └── Total_data_set_point
     ├── Training
