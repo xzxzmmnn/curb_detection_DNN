@@ -30,6 +30,7 @@ Folder descrption
 * Total_data_set_line : The label format is lines in 2D image domain.
 * Total_data_set_point : The label format is points in 2D image domain.
 * input_data : It consists of three folders; cue_points, density_map, and slice_map
+
 ⋅⋅⋅You
 * labels : 2D image(320x416). The pixel values for curb area are one. The others area are zero.
 * top_view_raw : The bird's eye view image of 3D point cloud for visualization.
