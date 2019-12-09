@@ -8,9 +8,6 @@ from input_func import *
 import Data.config as cfg
 class YHMODEL:
     def __init__(self):
-        """
-        model 0818 : I have mistakes, in the validating, I did not use the visual cue. so the test performance is so bad. So I changed it.
-        """
         self.NUM_CLASSES=2
         self.IMAGE_W=320
         self.IMAGE_H=416
@@ -130,7 +127,7 @@ class YHMODEL:
                         self.summary_writer.add_summary(tmp_learning_rate, epoch)
                         feed_input_list=[lidar_data,fsd_label,epoch]
                         self.draw_sum_line(probabilities,feed_input_list)
-                        self.bd_point_based_PR(probabilities,feed_input_list)#precision and recall val in the training.
+                        self.bd_point_based_PR(probabilities,feed_input_list)
                     if epoch%self.val_interval==0:
                         print("evaluating validation set...")
                         self.validating(probabilities,epoch)
@@ -146,7 +143,7 @@ class YHMODEL:
         return train_operation,learning_rate
 
 
-    def loss_bd(self,images,bd_labels,train_flag):#for slicing format
+    def loss_bd(self,images,bd_labels,train_flag):
         infer_fsd= self.inference_bd_2(images,Training=train_flag)
         logits = tf.reshape(infer_fsd, [-1, self.NUM_CLASSES])
         labels = tf.reshape(bd_labels, [-1])
@@ -156,10 +153,10 @@ class YHMODEL:
         return total_loss,infer_fsd
 
 
-    def draw_sum_bd_point(self, probabilities, feed_input_list):#batchsize로 읽었을 때
+    def draw_sum_bd_point(self, probabilities, feed_input_list):
         summary_feed_dict = {self.input_node: feed_input_list[0], self.curb_label_node: feed_input_list[1], self.train_flag: False}
         prob = self.sess.run(probabilities, feed_dict=summary_feed_dict)
-        pro_image = np.squeeze(prob[0])#안에 들어가는 숫자가 한 장의 이미지를 의미한다고 생각하면 된다.
+        pro_image = np.squeeze(prob[0])
         raw_image = self.top_view_image.copy()
         for h in range(pro_image.shape[0]):
             for w in range(pro_image.shape[1]):
@@ -172,10 +169,10 @@ class YHMODEL:
         self.summary_writer.add_summary(summary_temp, feed_input_list[2])
 
 
-    def draw_sum_line(self, probabilities, feed_input_list):#batchsize로 읽었을 때
+    def draw_sum_line(self, probabilities, feed_input_list):
         summary_feed_dict = {self.input_node: feed_input_list[0], self.curb_label_node: feed_input_list[1], self.train_flag: False}
         prob = self.sess.run(probabilities, feed_dict=summary_feed_dict)
-        pro_image = np.squeeze(prob[0])#안에 들어가는 숫자가 한 장의 이미지를 의미한다고 생각하면 된다.
+        pro_image = np.squeeze(prob[0])
         raw_image = self.top_view_image.copy()
         for h in range(pro_image.shape[0]):
             for w in range(pro_image.shape[1]):
@@ -194,14 +191,13 @@ class YHMODEL:
     def validating(self,probabilties,gl_steps):
         vali_set, vali_label_set, frame_number_list = self.func.test_data_gen_2(self.test_dir,self.train_dir)#changing visual cue.
         number_set = [i for i in range(vali_set.shape[0])]
-        random.shuffle(number_set)#이거 맞는지 확인 필요.!!!!!!!!!!!!!!!!
+        random.shuffle(number_set)
 
         total_pre,total_recall=0,0
-        for step in range(1, vali_label_set.shape[0] // self.BATCH_SIZE + 1):#test data를 전체 한 번 돌리기 위해서.
+        for step in range(1, vali_label_set.shape[0] 
             input_data, labels,first_frame_number=self.gen_test_data_bd(step,number_set,vali_set,vali_label_set,frame_number_list,batch_size=2)
 
             vali_feed_dict={self.input_node:input_data, self.curb_label_node:labels,self.train_flag:False}
-            #probabilties=tf.nn.softmax(self.curb_infer)#이렇게 변수를 넘기는 것이 맞는지 헷갈리네 먼가 이상한데.
 
 
             prob = self.sess.run(probabilties, feed_dict=vali_feed_dict)
@@ -266,9 +262,7 @@ class YHMODEL:
             deconv9= Deconv2DfromVoxelNet(256,128,3,(8,8),(0,0),layer9,training=Training,name="deconv9")#416x320
             layer10 = residual_group(layer9, 256, 512,residual_net_n=5, first_subsample=True, phase_train=Training, scope='group_4')#26x20
             deconv10= Deconv2DfromVoxelNet(512,128,3,(16,16),(0,0),layer10,training=Training,name="deconv10")#400x300
-            # layer11 = residual_group(layer10, 512, 1024,residual_net_n=5, first_subsample=True, phase_train=Training, scope='group_5')#13x10
-            # deconv11= Deconv2DfromVoxelNet(1024,128,3,(32,32),(0,0),layer11,training=Training,name="deconv11")#400x300
-            # residual+pyramid
+
 
             #final
             merge_conv=tf.concat([deconv7,deconv8,deconv9,deconv10],-1)
@@ -359,14 +353,14 @@ class YHMODEL:
                                     prediction_image[row - 1, col + 1,1] == 1 or prediction_image[row + 1, col + 1,1] == 1 or
                                     prediction_image[row - 1, col - 1,1] == 1):
 
-                                TP += 1 #해당 지점 위치 근처로 반경 1 grid size내에 있다면 true positive.
+                                TP += 1 
                             else:
 
                                 FN += 1
 
                     else:
-                        if (row != 0 and row != 415 and col != 0 and col != 319):#curb가 아닌 영역 주변에
-                            if (prediction_image[row, col,1] == 1):#curb라고 prediction하면 false positive
+                        if (row != 0 and row != 415 and col != 0 and col != 319):
+                            if (prediction_image[row, col,1] == 1):
                                 FP += 1
                             else:
                                 TN += 1
@@ -377,14 +371,6 @@ class YHMODEL:
             total_precision+=precision
             total_recall+=recall
 
-
-        # avg_precision=total_precision/prob.shape[0]
-        # avg_recall=total_recall/prob.shape[0]
-
-        # feed_for_acc={self.test_precision_node:avg_precision, self.test_recall_node:avg_recall}
-        # tmp_pre,tmp_recall = self.sess.run([self.test_precision,self.test_recall], feed_dict=feed_for_acc)
-        # self.summary_writer.add_summary(tmp_pre, gl_steps)
-        # self.summary_writer.add_summary(tmp_recall, gl_steps)
 
         return total_precision,total_recall
 
@@ -433,13 +419,6 @@ class YHMODEL:
             recall = TP / (TP + FN)
             total_precision+=precision
             total_recall+=recall
-
-        # avg_precision=total_precision/prob.shape[0]
-        # avg_recall=total_recall/prob.shape[0]
-        # feed_for_acc={self.test_precision_node:avg_precision, self.test_recall_node:avg_recall}
-        # tmp_pre,tmp_recall = self.sess.run([self.test_precision,self.test_recall], feed_dict=feed_for_acc)
-        # self.summary_writer.add_summary(tmp_pre, gl_steps)
-        # self.summary_writer.add_summary(tmp_recall, gl_steps)
 
         return total_precision,total_recall
 
