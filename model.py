@@ -177,7 +177,6 @@ class YHMODEL:
         for h in range(pro_image.shape[0]):
             for w in range(pro_image.shape[1]):
                 if (pro_image[h, w, 1] > self.detection_thres):
-                    #cv2.circle(raw_image,(w,h),3,(255,0,0),-1)
                     raw_image[h,w,0]=255
                     raw_image[h,w, 1] = 0
                     raw_image[h, w, 2] = 0
@@ -222,8 +221,8 @@ class YHMODEL:
                 summary_test_image = self.sess.run(self.sum_test_image, feed_dict=temp_feed)
                 self.summary_writer.add_summary(summary_test_image, gl_steps)
 
-        avg_pre=total_pre/vali_label_set.shape[0]#각 frame당 precision을 더해서
-        avg_recall=total_recall/vali_label_set.shape[0]#각 frame당 recall을 더해서
+        avg_pre=total_pre/vali_label_set.shape[0]
+        avg_recall=total_recall/vali_label_set.shape[0]
 
         feed_for_acc={self.test_precision_node:avg_pre, self.test_recall_node:avg_recall}
         tmp_pre,tmp_recall = self.sess.run([self.test_precision,self.test_recall], feed_dict=feed_for_acc)
@@ -281,8 +280,8 @@ class YHMODEL:
     def bd_point_based_PR(self,probabilities,feed_input_list):
         summary_feed_dict = {self.input_node: feed_input_list[0], self.curb_label_node: feed_input_list[1], self.train_flag: False}
         prob = self.sess.run(probabilities, feed_dict=summary_feed_dict)
-        #prediction_image = np.squeeze(prob[0])#squeeze 굳이 안 해도 되네.
-        prediction_image=prob[0]#여기서 2개의 이미지중 하나의 이미지만 선택함.
+        #prediction_image = np.squeeze(prob[0])
+        prediction_image=prob[0]
 
         for row in range(prediction_image.shape[0]):
             for col in range(prediction_image.shape[1]):
@@ -331,7 +330,7 @@ class YHMODEL:
 
         for image_idx in range(prob.shape[0]):
             prediction_image=None
-            prediction_image=prob[image_idx]#여기서 2개의 이미지중 하나의 이미지만 선택함.
+            prediction_image=prob[image_idx]
 
             for row in range(prediction_image.shape[0]):
                 for col in range(prediction_image.shape[1]):
@@ -344,7 +343,7 @@ class YHMODEL:
             gen_label_image=labels[image_idx]
             for row in range(gen_label_image.shape[0]):
                 for col in range(gen_label_image.shape[1]):
-                    if (gen_label_image[row, col] == 1):#curb 영역에 대해서
+                    if (gen_label_image[row, col] == 1):
                         gt_num+=1
                         if (row != 0 and row != 415 and col != 0 and col != 319):
                             if (prediction_image[row, col,1] == 1 or prediction_image[row + 1, col,1] == 1 or prediction_image[
@@ -380,7 +379,7 @@ class YHMODEL:
 
         for image_idx in range(prob.shape[0]):
             prediction_image=None
-            prediction_image=prob[image_idx]#여기서 2개의 이미지중 하나의 이미지만 선택함.
+            prediction_image=prob[image_idx]
 
             for row in range(prediction_image.shape[0]):
                 for col in range(prediction_image.shape[1]):
