@@ -3,7 +3,6 @@ warnings.filterwarnings("ignore", message="numpy.dtype size changed, may indicat
 import tensorflow as tf
 from CommonFunc import *
 from ops import *
-from Utils import *
 from input_func import *
 import Data.config as cfg
 class YHMODEL:
