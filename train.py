@@ -1,4 +1,4 @@
-from model_0822 import *
+from model import *
 import os
 os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
