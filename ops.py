@@ -115,23 +115,20 @@ def batch_norm_res(x, n_out, phase_train, scope='bn', affine=True):
     tf.add_to_collection('biases', beta)
     tf.add_to_collection('weights', gamma)
 
-    batch_mean, batch_var = tf.nn.moments(x, [0,1,2], name='moments')#calaulate the mean and variance of x, global normalization과 같이 사용하기 위해서는 axis=[0,1,2]로 주어야 한다.
-    ema = tf.train.ExponentialMovingAverage(decay=0.99)#maintains moving averages of variables by employin an exponential decay.
+    batch_mean, batch_var = tf.nn.moments(x, [0,1,2], name='moments')
+    ema = tf.train.ExponentialMovingAverage(decay=0.99)
 
     def mean_var_with_update():
-      ema_apply_op = ema.apply([batch_mean, batch_var])#여기서 질실적인 연산이 이루어진다고 생각하면 된다. 내 생각에는 avg=pre_avg*decay+(1-decay)*current_variable인듯 하다.
+      ema_apply_op = ema.apply([batch_mean, batch_var])
       with tf.control_dependencies([ema_apply_op]):
-        return tf.identity(batch_mean), tf.identity(batch_var)#return a tensor with the same shape and contents as input
+        return tf.identity(batch_mean), tf.identity(batch_var)
 
     mean, var = control_flow_ops.cond(phase_train,
       mean_var_with_update,
-      lambda: (ema.average(batch_mean), ema.average(batch_var)))#phase_train의 값을 보고 true일 경우에는 mean_var_with_update를 return하고 false일 경우에는 아래의 lambda함수를 return한다.
+      lambda: (ema.average(batch_mean), ema.average(batch_var)))
 
     normed = tf.nn.batch_norm_with_global_normalization(x, mean, var,beta, gamma, 1e-3, affine)
-    #여기서 beta, gamma를 학습한다고 보면 된다.
-    #affine이 있는 자리가 sale_after_normalization
-    #1e-3 : A small float number to avoid dividing by 0
-    #affine=A bool indicating whether the resulted tensor needs to be multiplied with gamma.
+
   return normed
 
 
@@ -145,12 +142,12 @@ def residual_group(x, n_in, n_out, residual_net_n, first_subsample, phase_train,
 
 def residual_block(x, n_in, n_out, subsample, phase_train, scope='res_block'):
   with tf.variable_scope(scope):
-    if subsample:#subsample means that stride is 2, so the W,H is decrease.
-      y = conv2d_res(x, n_in, n_out, 3, 2, 'SAME', False, scope='conv_1')#here, false means that no bias.
-      shortcut = conv2d_res(x, n_in, n_out, 3, 2, 'SAME',False, scope='shortcut')#If we subsample, we need shortcut.
+    if subsample:
+      y = conv2d_res(x, n_in, n_out, 3, 2, 'SAME', False, scope='conv_1')
+      shortcut = conv2d_res(x, n_in, n_out, 3, 2, 'SAME',False, scope='shortcut')
     else:
       y = conv2d_res(x, n_in, n_out, 3, 1, 'SAME', False, scope='conv_1')
-      shortcut = tf.identity(x, name='shortcut')#if the dimension is same, we just need identity value.
+      shortcut = tf.identity(x, name='shortcut')
     y = batch_norm_res(y, n_out, phase_train, scope='bn_1')
     y = tf.nn.relu(y, name='relu_1')
     y = conv2d_res(y, n_out, n_out, 3, 1, 'SAME', True, scope='conv_2')
@@ -168,7 +165,7 @@ def Deconv2DfromVoxelNet(Cin, Cout, k, s, p, input, training=True, name='deconv'
     pad = tf.pad(input, paddings, "CONSTANT")
     with tf.variable_scope(name) as scope:
         temp_conv = tf.layers.conv2d_transpose(
-            pad, Cout, k, strides=s, padding="SAME", reuse=tf.AUTO_REUSE, name=scope)#stride is actually factor for enlarge, for example s is (2,2), the H, W -> 2W, 2H
+            pad, Cout, k, strides=s, padding="SAME", reuse=tf.AUTO_REUSE, name=scope)
         temp_conv = tf.layers.batch_normalization(
             temp_conv, axis=-1, fused=True, training=training, reuse=tf.AUTO_REUSE, name=scope)
         return tf.nn.relu(temp_conv)
@@ -181,7 +178,7 @@ def Deconv2DfromVoxelNet_2(Cin, Cout, k, s, p, input, training=True, name='decon
     pad = tf.pad(input, paddings, "CONSTANT")
     with tf.variable_scope(name) as scope:
         temp_conv = tf.layers.conv2d_transpose(
-            pad, Cout, k, strides=s, padding="SAME", reuse=tf.AUTO_REUSE, name=scope)#stride is actually factor for enlarge, for example s is (2,2), the H, W -> 2W, 2H
+            pad, Cout, k, strides=s, padding="SAME", reuse=tf.AUTO_REUSE, name=scope)
         temp_conv = batch_norm_res(temp_conv,Cout,training,scope='voxelDeconv')
         return tf.nn.relu(temp_conv)
 
