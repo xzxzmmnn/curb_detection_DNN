@@ -1,7 +1,6 @@
 # Fast Curb Detection based on a Single-Shot Point Cloud with Cue Points using Deep Neural Networks
 ## **Introduction**
 
-Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Fast Curb Detection based on a Single-Shot Point Cloud with Cue Points Using Deep Neural Networks," submitted to International Conference on Robotics and Automation, 2020.
 ## Data set
 ```
 ├── Total_data_set_line
@@ -34,7 +33,7 @@ Folder descrption
 * top_view_raw : The bird's eye view image of 3D point cloud for visualization.
 * test : It contains the only lables for test phase. The inputs are included in training folder. You can use the file name of labels in the test foler to extract the input data.
 
-The link for dataset is https://drive.google.com/drive/folders/1RuApVar81cC59NZgJmkFyBwkfGUYK79o?usp=sharing
+The link for dataset is
 
 
 ## Project Code 
