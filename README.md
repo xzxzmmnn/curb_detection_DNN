@@ -1,4 +1,4 @@
-# Fast Curb Detection based on a Single-Shot Point Cloud with Cue Points using Deep Neural Networks
+# Uncertainty-Aware Fast Curb Detection Using\\ Convolutional Networks in Point Clouds
 ## **Introduction**
 
 ## Data set
