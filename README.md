@@ -36,7 +36,7 @@ Folder descrption
 The link for dataset is
 
 ## Data video
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://drive.google.com/file/d/1b0WorK_ssR-9q_EDocmYXjCFneqlBAtg/view?usp=sharing)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/2d28cw9zb-0)
 
 
 ## Project Code 
