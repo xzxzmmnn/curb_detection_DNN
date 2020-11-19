@@ -36,7 +36,7 @@ Folder descrption
 The link for dataset is
 
 ## Label Extraction from Semantic Map 
-[![IMAGE ALT TEXT HERE](https://drive.google.com/uc?export=view&id=1R-ljnWRGG1t4iyzx7pkNQYeYgu1JkH-5)](https://youtu.be/2d28cw9zb-0)
+[![IMAGE ALT TEXT HERE](https://drive.google.com/kr?export=view&id=1R-ljnWRGG1t4iyzx7pkNQYeYgu1JkH-5)](https://youtu.be/2d28cw9zb-0)
 
 
 ## Project Code 
