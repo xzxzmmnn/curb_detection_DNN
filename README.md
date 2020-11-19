@@ -35,8 +35,8 @@ Folder descrption
 
 The link for dataset is
 
-## Data video
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://youtu.be/2d28cw9zb-0)
+## Label Extraction from Semantic Map 
+[![IMAGE ALT TEXT HERE](https://drive.google.com/uc?id=1R-ljnWRGG1t4iyzx7pkNQYeYgu1JkH-5)](https://youtu.be/2d28cw9zb-0)
 
 
 ## Project Code 
