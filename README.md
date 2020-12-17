@@ -4,34 +4,53 @@ Younghwa Jung, Mingu Jeon, Chan Kim, Seung-Woo Seo, and Seong-Woo Kim, "Uncertai
 ## Data set
 ```
 ├── Total_data_set_line
-│   ├── Training
+│   ├── Training (4,724 frame)
 │   │   ├── input_data
 │   │   │             ├──density_map 
-│   │   │             └──heights_maps
-│   │   │             
+│   │   │             └──heights_map            
 │   │   ├── labels
-│   │   └── top_view_raw   
-│   └── test
-│       └── labels            
+│   │   ├── top_view_raw
+│   │   └── pcd_file
+│   │
+│   └── test (500 frame)
+│       ├── input_data
+│       │            ├──density_map 
+│       │            └──heights_map
+│       ├── labels            
+│       ├── top_view_raw
+│       └── pcd_file
+│
 │
 └── Total_data_set_point
-│   ├── Training
+│   ├── Training (4,820 frame)
 │   │   ├── input_data
 │   │   │             ├──density_map 
-│   │   │             └──heights_maps
-│   │   │                                   
+│   │   │             └──heights_map            
 │   │   ├── labels
-│   │   └── top_view_raw   
-│   └── test
-│        └── labels
+│   │   ├── top_view_raw
+│   │   └── pcd_file
+│   │
+│   └── test (2,000 frame)
+│       ├── input_data
+│       │            ├──density_map 
+│       │            └──heights_map
+│       ├── labels            
+│       ├── top_view_raw
+│       └── pcd_file
+
 ```
+Data description
+* The number of total frame in Total_data_set_line is 5,524.
+* The number of total frame in Total_data_set_point is 6,820.
+* The reason why the number of total frame in two folder is diffent is that we cannot draw lines from the points in some areas. 
+
 Folder descrption
 * Total_data_set_line : The label format is lines in 2D image domain.
 * Total_data_set_point : The label format is points in 2D image domain.
 * input_data : It consists of two folders; density_map and height_maps
 * labels : 2D image(320x416). The pixel values for curb area are one. The others area are zero.
 * top_view_raw : The bird's eye view image of 3D point cloud for visualization.
-* test : It contains the only lables for test phase. The inputs are included in training folder. You can use the file name of labels in the test foler to extract the input data.
+* pcd_file : 3D raw point cloud.
 
 The link for dataset is
 
